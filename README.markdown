@@ -1,4 +1,5 @@
 # 用於 SVG 的清潔過濾器<br>Clean Filter for SVG
+[![Build Status of the latest development snapshot on Travis CI](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG.svg?branch=master)](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG)  
 A clean filter for SVG for Git and other applications.  Currently it strips out personal information and metadata not suited for version controlling.
 
 <https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG>
