@@ -1,0 +1,10 @@
+# gitattributes - defining attributes per path
+# https://git-scm.com/docs/gitattributes
+
+## Setup filters for GNU Bash scripts
+## Refer .gitconfig for more information
+*.bash filter=bash
+
+## Setup filters for SVG
+## Refer .gitconfig for more information
+*.svg filter=svg
