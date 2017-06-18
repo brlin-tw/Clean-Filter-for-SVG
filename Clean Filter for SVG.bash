@@ -31,17 +31,6 @@ init(){
 		"${tempfile}"\
 		'/_:svg/@inkscape:version'
 
-	# FIXME: What is these?
-	xml_delete_node\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:cx'
-	xml_delete_node\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:cy'
-	xml_delete_node\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
-
 	# Current working layer of the previous Inkscape session
 	xml_delete_node\
 		"${tempfile}"\
@@ -59,6 +48,17 @@ init(){
 	xml_delete_node\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-height'
+
+	# FIXME: What is these?
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:cx'
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:cy'
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
 
 	xml_beautify_file\
 		"${tempfile}"
