@@ -31,6 +31,11 @@ init(){
 		"${tempfile}"\
 		'/_:svg/@inkscape:version'
 
+	# Essentially the SVG filename
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/@sodipodi:docname'
+
 	# Current working layer of the previous Inkscape session
 	xml_delete_node\
 		"${tempfile}"\
