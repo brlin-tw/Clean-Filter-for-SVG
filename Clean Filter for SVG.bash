@@ -63,6 +63,9 @@ init(){
 	xml_beautify_file\
 		"${tempfile}"
 
+	# feed stdout with processed tempfile
+	cat "${tempfile}"
+
 	exit "${?}"
 }; declare -fr init
 
