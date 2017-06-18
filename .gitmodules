@@ -6,4 +6,4 @@
 	url = https://github.com/Lin-Buo-Ren/Git_Pre-commit_Hook_for_GNU_Bash_Projects.git
 [submodule "Libraries/xml.bash"]
 	path = Libraries/xml.bash
-	url = git@github.com:Lin-Buo-Ren/xml.bash.git
+	url = https://github.com/Lin-Buo-Ren/xml.bash.git
