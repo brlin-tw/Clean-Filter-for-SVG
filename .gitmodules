@@ -4,3 +4,6 @@
 [submodule "Git Hooks/Git Pre-commit Hook for GNU Bash Projects"]
 	path = Git Hooks/Git Pre-commit Hook for GNU Bash Projects
 	url = https://github.com/Lin-Buo-Ren/Git_Pre-commit_Hook_for_GNU_Bash_Projects.git
+[submodule "Libraries/xml.bash"]
+	path = Libraries/xml.bash
+	url = git@github.com:Lin-Buo-Ren/xml.bash.git
