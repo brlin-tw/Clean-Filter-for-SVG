@@ -5,14 +5,64 @@
 
 ## init function: program entrypoint
 init(){
-	printf "Clean 過濾器：正在移除 SVG 非必要資訊與美化代碼……\n" 1>&2
-	xmlstarlet edit\
-		--pf\
-		--ps\
-		--delete\
-		"/_:svg/@inkscape:export-filename | /_:svg/@inkscape:version | /_:svg/sodipodi:namedview/@inkscape:cx | /_:svg/sodipodi:namedview/@inkscape:cy | /_:svg/sodipodi:namedview/@inkscape:current-layer | /_:svg/sodipodi:namedview/@inkscape:zoom | /_:svg/sodipodi:namedview/@inkscape:snap-nodes | /_:svg/sodipodi:namedview/@inkscape:window-width | /_:svg/sodipodi:namedview/@inkscape:window-height"\
-		| xmlstarlet format\
-			--indent-tab
+	printf --\
+		"%s: Removing SVG non-necessary info and beatifying markup...\n"\
+		"${RUNTIME_EXECUTABLE_NAME}"\
+		1>&2
+
+	# External project, out of scope
+	# shellcheck disable=SC1090
+	source "${RUNTIME_EXECUTABLE_DIRECTORY}/Libraries/xml.bash/xml.bash"
+
+	local tempfile
+	tempfile="$(mktemp --tmpdir "${RUNTIME_EXECUTABLE_NAME}.XXXXXX.tmp")"
+	local -r tempfile
+
+	# dump stdin to tempfile
+	cat >"${tempfile}"
+	
+	# The full path of the exported picture, contains sensitive information such as parent paths
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/@inkscape:export-filename'
+
+	# Inkscape version
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/@inkscape:version'
+
+	# FIXME: What is these?
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:cx'
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:cy'
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
+
+	# Current working layer of the previous Inkscape session
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:current-layer'
+
+	# The zoom level of previous Inkscape session
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:zoom'
+
+	# Inkscape window's width and height in previous session
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-width'
+	xml_delete_node\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-height'
+
+	xml_beautify_file\
+		"${tempfile}"
+
 	exit "${?}"
 }; declare -fr init
 
