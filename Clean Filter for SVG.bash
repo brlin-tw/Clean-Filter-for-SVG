@@ -22,46 +22,46 @@ init(){
 	cat >"${tempfile}"
 	
 	# The full path of the exported picture, contains sensitive information such as parent paths
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@inkscape:export-filename'
 
 	# Inkscape version
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@inkscape:version'
 
 	# Essentially the SVG filename
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@sodipodi:docname'
 
 	# Current working layer of the previous Inkscape session
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:current-layer'
 
 	# The zoom level of previous Inkscape session
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:zoom'
 
 	# Inkscape window's width and height in previous session
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-width'
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-height'
 
 	# FIXME: What is these?
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:cx'
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:cy'
-	xml_delete_node\
+	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
 
