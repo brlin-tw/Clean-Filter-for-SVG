@@ -50,7 +50,7 @@ init(){
 		--relative\
 		--force\
 		--verbose\
-		"${RUNTIME_EXECUTABLE_DIRECTORY}/Git Hooks/Git Pre-commit Hook for GNU Bash Projects/Pre-commit Script.bash"\
+		"${RUNTIME_EXECUTABLE_DIRECTORY}/Git Hooks/Git Pre-commit Hook for GNU Bash Projects/Git Pre-commit Hook for GNU Bash Projects.bash"\
 		"${GIT_DIR}/hooks/pre-commit"
 	git config\
 		--local\
