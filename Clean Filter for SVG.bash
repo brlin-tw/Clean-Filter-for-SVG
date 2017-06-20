@@ -54,6 +54,19 @@ init(){
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-height'
 
+	# Inkscape windows's location in previous session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-x'
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-y'
+
+	# Inkscape windows's maximized status in previous session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-maximized'
+
 	# FIXME: What is these?
 	xml_remove_xpath\
 		"${tempfile}"\
