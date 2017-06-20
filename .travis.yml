@@ -27,6 +27,4 @@ git:
   depth: 30
 
 script:
-#- git ls-files -z \*.bash | xargs --max-args=1 --verbose --null -- shellcheck
-# The following command will be dropped in favor with the above one after Travis CI environment contains ShellCheck >=0.4.5, which fixes the bug that triggers SC2148 even when `shell` directive is used
-- git ls-files -z \*.bash | xargs --max-args=1 --verbose --null -- shellcheck --shell=bash
+- ./"GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash"
