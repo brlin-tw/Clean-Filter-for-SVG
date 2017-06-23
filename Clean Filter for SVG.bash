@@ -20,7 +20,7 @@ init(){
 
 	# dump stdin to tempfile
 	cat >"${tempfile}"
-	
+
 	# Inkscape export settings
 	## Export DPI settings - Not useful in practice
 	xml_remove_xpath\
