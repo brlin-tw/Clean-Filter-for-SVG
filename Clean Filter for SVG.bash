@@ -24,7 +24,7 @@ init(){
 	# The full path of the exported picture, contains sensitive information such as parent paths
 	xml_remove_xpath\
 		"${tempfile}"\
-		'/_:svg/@inkscape:export-filename'
+		'/_:svg//@inkscape:export-filename'
 
 	# Inkscape version
 	xml_remove_xpath\
