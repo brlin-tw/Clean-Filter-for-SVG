@@ -21,7 +21,7 @@ init(){
 	# dump stdin to tempfile
 	cat >"${tempfile}"
 	
-	# The full path of the exported picture, contains sensitive information such as parent paths
+	# The full path of the exported picture, contains sensitive information such as absolute paths
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg//@inkscape:export-filename'
