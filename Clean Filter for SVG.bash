@@ -21,6 +21,36 @@ init(){
 	# dump stdin to tempfile
 	cat >"${tempfile}"
 
+	# Inkscape: Info of the previous session
+	## Window settings
+	### Inkscape window's width and height in previous session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-width'
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-height'
+	### Inkscape windows's location in previous session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-x'
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-y'
+	### Inkscape windows's maximized status in previous session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:window-maximized'
+
+	## Current working layer of the previous Inkscape session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:current-layer'
+	## The zoom level of previous Inkscape session
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:zoom'
+
 	# Inkscape export settings
 	## Export DPI settings - Not useful in practice
 	xml_remove_xpath\
@@ -44,37 +74,6 @@ init(){
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@sodipodi:docname'
-
-	# Current working layer of the previous Inkscape session
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:current-layer'
-
-	# The zoom level of previous Inkscape session
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:zoom'
-
-	# Inkscape window's width and height in previous session
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:window-width'
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:window-height'
-
-	# Inkscape windows's location in previous session
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:window-x'
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:window-y'
-
-	# Inkscape windows's maximized status in previous session
-	xml_remove_xpath\
-		"${tempfile}"\
-		'/_:svg/sodipodi:namedview/@inkscape:window-maximized'
 
 	# FIXME: What is these?
 	xml_remove_xpath\
