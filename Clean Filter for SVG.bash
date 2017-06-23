@@ -21,61 +21,62 @@ init(){
 	# dump stdin to tempfile
 	cat >"${tempfile}"
 
-	# Inkscape: Info of the previous session
-	## Window settings
-	### Inkscape window's width and height in previous session
+	# Inkscape-specific info
+	## Info of the previous session
+	### Window settings
+	#### Inkscape window's width and height in previous session
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-width'
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-height'
-	### Inkscape windows's location in previous session
+	#### Inkscape windows's location in previous session
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-x'
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-y'
-	### Inkscape windows's maximized status in previous session
+	#### Inkscape windows's maximized status in previous session
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-maximized'
 
-	## Current working layer of the previous Inkscape session
+	### Current working layer of the previous Inkscape session
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:current-layer'
-	## The zoom level of previous Inkscape session
+
+	### The zoom level of previous Inkscape session
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:zoom'
 
-	# Inkscape export settings
-	## Export DPI settings - Not useful in practice
+	## Export settings
+	### Export DPI settings - Not useful in practice
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg//@inkscape:export-xdpi'
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg//@inkscape:export-ydpi'
-
-	## The full path of the exported picture, contains sensitive information such as absolute paths
+	### The full path of the exported picture, contains sensitive information such as absolute paths
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg//@inkscape:export-filename'
 
-	# Inkscape version
+	## Inkscape version
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@inkscape:version'
 
-	# Essentially the SVG filename
+	## Essentially the SVG filename
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@sodipodi:docname'
 
-	# FIXME: What is these?
+	## FIXME: What is these?
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:cx'
