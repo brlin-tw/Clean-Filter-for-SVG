@@ -31,6 +31,7 @@ init(){
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-height'
+
 	#### Inkscape windows's location in previous session
 	xml_remove_xpath\
 		"${tempfile}"\
@@ -38,6 +39,7 @@ init(){
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/sodipodi:namedview/@inkscape:window-y'
+
 	#### Inkscape windows's maximized status in previous session
 	xml_remove_xpath\
 		"${tempfile}"\
@@ -75,6 +77,21 @@ init(){
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg/@sodipodi:docname'
+
+	## File load/save settings
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/@inkscape:output_extension'
+
+	## Inkscape-specific page settings that is not particulary useful to be included in image, and should fallback to sensible defaults
+	### Whether or not showing a slim "shadow" at the right and bottom side of page
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:showpageshadow'
+	### Whether or not showing a grid
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg/sodipodi:namedview/@inkscape:showgrid'
 
 	## FIXME: What is these?
 	xml_remove_xpath\
