@@ -21,7 +21,16 @@ init(){
 	# dump stdin to tempfile
 	cat >"${tempfile}"
 	
-	# The full path of the exported picture, contains sensitive information such as absolute paths
+	# Inkscape export settings
+	## Export DPI settings - Not useful in practice
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg//@inkscape:export-xdpi'
+	xml_remove_xpath\
+		"${tempfile}"\
+		'/_:svg//@inkscape:export-ydpi'
+
+	## The full path of the exported picture, contains sensitive information such as absolute paths
 	xml_remove_xpath\
 		"${tempfile}"\
 		'/_:svg//@inkscape:export-filename'
