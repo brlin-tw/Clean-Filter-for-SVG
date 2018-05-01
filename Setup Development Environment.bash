@@ -42,6 +42,19 @@ trap_exit(){
 
 ## init function: program entrypoint
 init(){
+	git submodule \
+		init \
+		'GNU Bash Automatic Checking Program for Git Projects' \
+		'Libraries/xml.bash' \
+		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts' \
+		'Git Hooks/Git Pre-commit Hook for GNU Bash Projects'
+	git submodule update \
+		--depth=1
+	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
+	git submodule init 'Third-party Software/the Bash Script Beautifier(patched)'
+	git submodule update --depth=1
+	popd >/dev/null
+
 	export\
 		GIT_DIR="${RUNTIME_EXECUTABLE_DIRECTORY}/.git"\
 		GIT_WORK_TREE="${RUNTIME_EXECUTABLE_DIRECTORY}"
@@ -56,10 +69,7 @@ init(){
 		--local\
 		include.path\
 		../.gitconfig
-	git submodule\
-		update\
-		--init\
-		--recursive
+
 	printf "\n%s: All set, happy hacking! :-)\n" "${RUNTIME_EXECUTABLE_NAME}"
 	exit 0
 }; declare -fr init
