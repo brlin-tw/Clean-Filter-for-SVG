@@ -38,9 +38,10 @@ for required_command in \
 				;;
 		esac
 
-		printf --\
-			'Error: This program requires "%s" to be installed and its executables in the executable searching paths.\n'\
-			"${required_software}" 1>&2
+		printf -- \
+			'Error: This program requires "%s" to be installed and its executables in the executable searching paths.\n' \
+			"${required_software}" \
+			1>&2
 		unset required_software
 	fi
 done; unset required_command required_software
