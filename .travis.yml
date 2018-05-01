@@ -9,10 +9,8 @@ sudo: false
 addons:
   apt:
     sources:
-    - debian-sid    # Grab shellcheck from the Debian repo (o_O)
     - git-core
     packages:
-    - shellcheck
     - realpath      # Merged to GNU Coreutils in Ubuntu 16.04
     - git           # Update Git due to missing `worktree` sub-command(git-core is not enough)
 
