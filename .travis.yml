@@ -28,8 +28,8 @@ git:
   submodules: false
 
 before_install:
-- git submodule init 'GNU Bash Automatic Checking Program for Git Projects'
+- git submodule init 'Linters/GNU Bash Automatic Checking Program for Git Projects'
 - git submodule update --depth=1
 
 script:
-- ./"GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash"
+- ./'Linters/GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash'

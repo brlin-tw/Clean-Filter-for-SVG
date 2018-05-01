@@ -7,6 +7,6 @@
 [submodule "Libraries/xml.bash"]
 	path = Libraries/xml.bash
 	url = https://github.com/Lin-Buo-Ren/xml.bash
-[submodule "GNU Bash Automatic Checking Program for Git Projects"]
-	path = GNU Bash Automatic Checking Program for Git Projects
+[submodule "Linters/GNU Bash Automatic Checking Program for Git Projects"]
+	path = Linters/GNU Bash Automatic Checking Program for Git Projects
 	url = https://github.com/Lin-Buo-Ren/GNU-Bash-Automatic-Checking-Program-for-Git-Projects.git

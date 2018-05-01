@@ -83,7 +83,7 @@ init(){
 
 	git submodule \
 		init \
-		'GNU Bash Automatic Checking Program for Git Projects' \
+		'Linters/GNU Bash Automatic Checking Program for Git Projects' \
 		'Libraries/xml.bash' \
 		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts' \
 		'Git Hooks/Git Pre-commit Hook for GNU Bash Projects'
