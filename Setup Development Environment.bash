@@ -81,6 +81,7 @@ init(){
 		exit 1
 	fi
 
+	cd "${RUNTIME_EXECUTABLE_DIRECTORY}"
 	git submodule \
 		init \
 		'Linters/GNU Bash Automatic Checking Program for Git Projects' \
