@@ -51,8 +51,8 @@ init(){
 	git submodule update \
 		--depth=1
 	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
-	git submodule init 'Third-party Software/the Bash Script Beautifier(patched)'
-	git submodule update --depth=1
+		git submodule init 'Code Formatters and Beautifiers/the Bash Script Beautifier'
+		git submodule update --depth=1
 	popd >/dev/null
 
 	export\
