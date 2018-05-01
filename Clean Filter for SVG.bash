@@ -5,9 +5,9 @@
 
 ## init function: program entrypoint
 init(){
-	printf --\
-		"%s: Removing SVG non-necessary info and beatifying markup...\n"\
-		"${RUNTIME_EXECUTABLE_NAME}"\
+	printf -- \
+		'%s: Removing SVG non-necessary info and beatifying markup...\n' \
+		"${RUNTIME_EXECUTABLE_NAME}" \
 		1>&2
 
 	# External project, out of scope
@@ -121,14 +121,14 @@ check_runtime_dependencies(){
 		xmlstarlet
 	do
 		if ! command -v "${executable_name}" &>/dev/null; then
-			printf\
-				"%s: Error: \"%s\" executable not found in executable search path!\n"\
-				"${FUNCNAME[0]}"\
-				"${executable_name}"\
+			printf -- \
+				'%s: Error: \"%s\" executable not found in executable search path!\n' \
+				"${FUNCNAME[0]}" \
+				"${executable_name}" \
 				1>&2
-			printf\
-				"%s: Error: Please check your runtime dependency installation.\n"\
-				"${FUNCNAME[0]}"\
+			printf -- \
+				'%s: Error: Please check your runtime dependency installation.\n' \
+				"${FUNCNAME[0]}" \
 				1>&2
 			exit 1
 		fi
@@ -164,7 +164,7 @@ declare -r RUNTIME_EXECUTABLE_PATH_RELATIVE="${0}"
 declare -r RUNTIME_COMMAND_BASE="${RUNTIME_COMMAND_BASE:-${0}}"
 
 trap_errexit(){
-	printf "An error occurred and the script is prematurely aborted\n" 1>&2
+	printf 'An error occurred and the script is prematurely aborted\n' 1>&2
 	return 0
 }; declare -fr trap_errexit; trap trap_errexit ERR
 
