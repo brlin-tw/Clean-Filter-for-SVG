@@ -25,6 +25,11 @@ language: markdown
 ## > Please note that if you use a depth of 1 and have a queue of jobs, Travis CI won’t build commits that are in the queue when you push a new commit.
 git:
   depth: 3
+  submodules: false
+
+before_install:
+- git submodule init 'GNU Bash Automatic Checking Program for Git Projects'
+- git submodule update --depth=1
 
 script:
 - ./"GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash"
