@@ -24,7 +24,7 @@ language: markdown
 ## https://docs.travis-ci.com/user/customizing-the-build/#Git-Clone-Depth
 ## > Please note that if you use a depth of 1 and have a queue of jobs, Travis CI won’t build commits that are in the queue when you push a new commit.
 git:
-  depth: 30
+  depth: 3
 
 script:
 - ./"GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash"
