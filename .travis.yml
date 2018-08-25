@@ -17,7 +17,7 @@ addons:
 ## We only support Ubuntu 14.04 and newer
 dist: trusty
 
-language: markdown
+language: bash
 
 ## EXPERIMENTAL
 ## Customizing the Build - Travis CI
