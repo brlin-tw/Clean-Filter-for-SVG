@@ -27,9 +27,8 @@ git:
   depth: 3
   submodules: false
 
-before_install:
-- git submodule init 'Linters/GNU Bash Automatic Checking Program for Git Projects'
-- git submodule update --depth=1
+install:
+- pip install --user pre-commit
 
-script:
-- ./'Linters/GNU Bash Automatic Checking Program for Git Projects/GNU Bash Automatic Checking Program for Git Projects.bash'
+before_script:
+- git diff-tree -z --no-commit-id --name-only -r HEAD | xargs --null pre-commit run --files
