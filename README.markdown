@@ -10,6 +10,7 @@ A clean filter for SVG for Git and other applications.  Currently it strips out 
 ## 如何使用<br>How to use?
 The following instructions is for projects that're using Git as their VCS to integrate Clean Filter for SVG, you may use this software for other purposes as well.
 
+1. Install [XMLStarlet Command Line XML Toolkit](http://xmlstar.sourceforge.net), which is this software's runtime dependency.  Make sure the `xmlstarlet` command is in your command search `PATH`s
 1. Clone this Git repository as your repo's submodule
 1. Merge the following gitattributes(5) file setup:  
 
