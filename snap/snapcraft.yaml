@@ -17,7 +17,7 @@ parts:
   main:
     source: .
     override-pull: |
-      set -o nounset
+      set -o nounset -o xtrace
 
       snapcraftctl pull
 
