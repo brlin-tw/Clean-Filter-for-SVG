@@ -31,7 +31,7 @@ The following instructions is for projects that're using Git as their VCS to int
 
     ```
 
-1. Profit!  The SVG files checked into the staging area will now passed through the clean filter, you may want to implement a development environment setup script like [this](Setup Development Environment.bash) to ease other contributer's setup.
+1. Profit!  The SVG files checked into the staging area will now passed through the clean filter, you may want to implement a development environment setup script like [this](<Setup Development Environment.bash>) to ease other contributer's setup.
 
 ## 智慧財產授權條款<br>Intellectual Property License
 GNU GPLv3 or any later releases you prefer
