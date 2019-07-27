@@ -7,6 +7,32 @@ A clean filter for SVG for Git and other applications.  Currently it strips out 
 ## 原作者<br>Original Author
 林博仁
 
+## 如何使用<br>How to use?
+The following instructions is for projects that're using Git as their VCS to integrate Clean Filter for SVG, you may use this software for other purposes as well.
+
+1. Clone this Git repository as your repo's submodule
+1. Merge the following gitattributes(5) file setup:  
+
+    ```
+	# gitattributes - defining attributes per path
+	# https://git-scm.com/docs/gitattributes
+	## Setup filters for SVG
+	## Refer .gitconfig for more information
+	*.svg filter=svg
+    ```
+
+1. Merge the following git-config(1) configuration:
+
+    ```
+	# Project-specific Git Configuration
+	# Documentation: manpage: git-config(1)
+	[filter "svg"]
+		clean = "\"./path/to/the/submodule/Clean Filter for SVG.bash\""
+
+    ```
+
+1. Profit!  The SVG files checked into the staging area will now passed through the clean filter, you may want to implement a development environment setup script like [this](Setup Development Environment.bash) to ease other contributer's setup.
+
 ## 智慧財產授權條款<br>Intellectual Property License
 GNU GPLv3 or any later releases you prefer
 
