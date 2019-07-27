@@ -1,0 +1,13 @@
+# Version Tracking Ignore Rules for Git VCS
+# https://git-scm.com/docs/gitignore
+## Ignore hidden files in Unix-like systems
+.*
+
+## Do track these hidden files
+!.editorconfig
+!.git*
+!.pre-commit-config.yaml
+!.travis.yml
+
+## Ignore snap packages
+*.snap

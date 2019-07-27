@@ -1,0 +1,69 @@
+%YAML 1.1
+---
+title: Clean Filter for SVG
+name: clean-filter-for-svg
+summary: A clean filter for stripping unnecessary metadata in SVGs
+description: |
+  A clean filter for SVG for Git and other applications. Currently it strips out personal information and metadata not suited for version controlling.
+
+  <https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG>
+
+adopt-info: main
+base: core
+confinement: devmode
+grade: devel
+
+parts:
+  main:
+    source: .
+    override-pull: |
+      set -o nounset
+
+      snapcraftctl pull
+      # Avoid triggering the clean filter
+      git config \
+        --unset \
+        include.path
+      snapcraftctl set-version "$(
+        git describe \
+          --always \
+          --dirty \
+          --tags \
+          | sed \
+            's/^v//'
+      )"
+      git config\
+        --local\
+        include.path\
+        ../.gitconfig
+
+    plugin: dump
+    organize:
+      # Workaround Snapcraft's app._app_name_.command property restricion
+      # https://forum.snapcraft.io/t/pattern-mismatch-in-the-app-app-name-command-property/12494
+      Clean Filter for SVG.bash: clean-filter-for-svg
+    stage:
+    - clean-filter-for-svg
+    - Libraries/*
+    - README.markdown
+
+  xmlstarlet:
+    plugin: nil
+    stage-snaps:
+    - xmlstarlet
+
+apps:
+  clean-filter-for-svg:
+    adapter: full
+    command: clean-filter-for-svg
+
+  # DISABLED: Not working for now
+  # https://forum.snapcraft.io/t/pattern-mismatch-in-the-app-app-name-command-property/12494
+  #readme:
+    #adapter: full
+    #command: /usr/bin/less README.markdown
+
+plugs:
+  # For regular file access of the converter mode
+  home:
+  removable-media:
