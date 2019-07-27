@@ -19,12 +19,7 @@ parts:
     override-pull: |
       set -o nounset
 
-      # DISABLED: Implement pull step manually to avoid submodule clone hell
-      #snapcraftctl pull
-
-      git submodule init \
-        'Libraries/xml.bash'
-      git submodule update
+      snapcraftctl pull
 
       # Avoid triggering the clean filter
       git config \
