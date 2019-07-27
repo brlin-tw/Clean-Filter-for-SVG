@@ -87,11 +87,10 @@ init(){
 		init \
 		'Libraries/xml.bash' \
 		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts'
-	git submodule update \
-		--depth=1
+	git submodule update
 	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
 		git submodule init 'Code Formatters and Beautifiers/the Bash Script Beautifier'
-		git submodule update --depth=1
+		git submodule update
 	popd >/dev/null
 
 	export\
