@@ -115,7 +115,7 @@ init(){
 		false)
 			# Filter mode
 			printf -- \
-				'%s: Cleaning GNU Bash script...\n' \
+				'%s: Cleaning SVG markup...\n' \
 				"${RUNTIME_EXECUTABLE_NAME}" \
 				1>&2
 			pass_over_filter \
