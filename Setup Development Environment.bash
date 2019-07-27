@@ -85,10 +85,8 @@ init(){
 	cd "${RUNTIME_EXECUTABLE_DIRECTORY}"
 	git submodule \
 		init \
-		'Linters/GNU Bash Automatic Checking Program for Git Projects' \
 		'Libraries/xml.bash' \
-		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts' \
-		'Git Hooks/Git Pre-commit Hook for GNU Bash Projects'
+		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts'
 	git submodule update \
 		--depth=1
 	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
