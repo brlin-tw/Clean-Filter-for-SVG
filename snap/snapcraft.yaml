@@ -12,8 +12,8 @@ license: GPL-3.0
 
 adopt-info: main
 base: core
-confinement: devmode
-grade: devel
+confinement: strict
+grade: stable
 
 parts:
   main:
