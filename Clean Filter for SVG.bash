@@ -180,9 +180,6 @@ print_help() {
         printf '### `-h` / `--help` ###\n'
         printf 'Print this message\n\n'
 
-        printf '### `--cleaner` / `-c` <name> ###\n'
-        printf 'Select cleaner: `xmlstarlet`(default)\n\n'
-
         printf '### `--converter` / `-C` ###\n'
         printf 'Operate in converter mode instead of filter mode, accept non-option arguments as input files\n\n'
 
