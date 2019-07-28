@@ -1,7 +1,7 @@
 # Project-specific Git Configuration
 # Documentation: manpage: git-config
 [filter "bash"]
-	clean = "\"Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts/filter.bash\" --cleaner shfmt"
+	clean = "shfmt -i 4 -bn -ci"
 
 [filter "svg"]
 	clean = "\"./Clean Filter for SVG.bash\""

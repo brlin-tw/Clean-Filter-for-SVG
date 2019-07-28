@@ -87,24 +87,12 @@ init() {
 	cd "${RUNTIME_EXECUTABLE_DIRECTORY}"
 	git submodule \
 		init \
-		'Libraries/xml.bash' \
-		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts'
+		'Libraries/xml.bash'
 	git submodule update
-	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
-	git submodule init 'Code Formatters and Beautifiers/the Bash Script Beautifier'
-	git submodule update
-	popd >/dev/null
 
 	export \
 		GIT_DIR="${RUNTIME_EXECUTABLE_DIRECTORY}/.git" \
 		GIT_WORK_TREE="${RUNTIME_EXECUTABLE_DIRECTORY}"
-	ln \
-		--symbolic \
-		--relative \
-		--force \
-		--verbose \
-		"${RUNTIME_EXECUTABLE_DIRECTORY}/Git Hooks/Git Pre-commit Hook for GNU Bash Projects/Git Pre-commit Hook for GNU Bash Projects.bash" \
-		"${GIT_DIR}/hooks/pre-commit"
 	git config \
 		--local \
 		include.path \
