@@ -22,6 +22,12 @@ parts:
       set -o nounset
 
       snapcraftctl pull
+      # Drop local gitconfig filter setup
+      # NOTE: This won't affect project dir git config as it modifies the config in SNAPCRAFT_PART_SRC
+      git config \
+        --unset \
+        include.path \
+        || test "${?}" = 5
       "$SNAPCRAFT_STAGE"/scriptlets/selective-checkout
 
     plugin: dump
