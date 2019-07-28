@@ -12,22 +12,22 @@ set -o nounset
 set -o pipefail
 
 ## Runtime Dependencies Checking
-declare\
-	runtime_dependency_checking_result=still-pass\
+declare \
+	runtime_dependency_checking_result=still-pass \
 	required_software
 
 for required_command in \
-	basename\
-	dirname\
+	basename \
+	dirname \
 	realpath; do
 	if ! command -v "${required_command}" &>/dev/null; then
 		runtime_dependency_checking_result=fail
 
 		case "${required_command}" in
-			basename\
-			|dirname\
-			|ln\
-			|realpath)
+			basename | \
+				dirname | \
+				ln | \
+				realpath)
 				required_software='GNU Coreutils'
 				;;
 			git)
@@ -44,13 +44,15 @@ for required_command in \
 			1>&2
 		unset required_software
 	fi
-done; unset required_command required_software
+done
+unset required_command required_software
 
 if [ "${runtime_dependency_checking_result}" = fail ]; then
-	printf --\
+	printf -- \
 		'Error: Runtime dependency checking fail, the progrom cannot continue.\n' 1>&2
 	exit 1
-fi; unset runtime_dependency_checking_result
+fi
+unset runtime_dependency_checking_result
 
 ## Non-overridable Primitive Variables
 ## BASHDOC: Shell Variables » Bash Variables
@@ -61,10 +63,10 @@ if [ -v 'BASH_SOURCE[0]' ]; then
 	RUNTIME_EXECUTABLE_NAME="${RUNTIME_EXECUTABLE_FILENAME%.*}"
 	RUNTIME_EXECUTABLE_DIRECTORY="$(dirname "${RUNTIME_EXECUTABLE_PATH}")"
 	RUNTIME_COMMANDLINE_BASECOMMAND="${0}"
-	declare -r\
-		RUNTIME_EXECUTABLE_FILENAME\
-		RUNTIME_EXECUTABLE_DIRECTORY\
-		RUNTIME_EXECUTABLE_PATHABSOLUTE\
+	declare -r \
+		RUNTIME_EXECUTABLE_FILENAME \
+		RUNTIME_EXECUTABLE_DIRECTORY \
+		RUNTIME_EXECUTABLE_PATHABSOLUTE \
 		RUNTIME_COMMANDLINE_BASECOMMAND
 fi
 declare -ar RUNTIME_COMMANDLINE_ARGUMENTS=("${@}")
@@ -72,7 +74,7 @@ declare -ar RUNTIME_COMMANDLINE_ARGUMENTS=("${@}")
 ## init function: entrypoint of main program
 ## This function is called near the end of the file,
 ## with the script's command-line parameters as arguments
-init(){
+init() {
 	if ! process_commandline_arguments; then
 		printf -- \
 			'Error: %s: Invalid command-line parameters.\n' \
@@ -89,35 +91,37 @@ init(){
 		'Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts'
 	git submodule update
 	pushd "${RUNTIME_EXECUTABLE_DIRECTORY}/Git Clean and Smudge Filters/Clean Filter for GNU Bash Scripts" >/dev/null
-		git submodule init 'Code Formatters and Beautifiers/the Bash Script Beautifier'
-		git submodule update
+	git submodule init 'Code Formatters and Beautifiers/the Bash Script Beautifier'
+	git submodule update
 	popd >/dev/null
 
-	export\
-		GIT_DIR="${RUNTIME_EXECUTABLE_DIRECTORY}/.git"\
+	export \
+		GIT_DIR="${RUNTIME_EXECUTABLE_DIRECTORY}/.git" \
 		GIT_WORK_TREE="${RUNTIME_EXECUTABLE_DIRECTORY}"
-	ln\
-		--symbolic\
-		--relative\
-		--force\
-		--verbose\
-		"${RUNTIME_EXECUTABLE_DIRECTORY}/Git Hooks/Git Pre-commit Hook for GNU Bash Projects/Git Pre-commit Hook for GNU Bash Projects.bash"\
+	ln \
+		--symbolic \
+		--relative \
+		--force \
+		--verbose \
+		"${RUNTIME_EXECUTABLE_DIRECTORY}/Git Hooks/Git Pre-commit Hook for GNU Bash Projects/Git Pre-commit Hook for GNU Bash Projects.bash" \
 		"${GIT_DIR}/hooks/pre-commit"
-	git config\
-		--local\
-		include.path\
+	git config \
+		--local \
+		include.path \
 		../.gitconfig
 
 	printf \
 		'\n%s: All set, happy hacking! :-)\n' \
 		"${RUNTIME_EXECUTABLE_NAME}"
 	exit 0
-}; declare -fr init
+}
+declare -fr init
 
-print_help(){
+print_help() {
 	printf 'Currently no help messages are available for this program\n' 1>&2
 	return 0
-}; declare -fr print_help;
+}
+declare -fr print_help
 
 process_commandline_arguments() {
 	if [ "${#RUNTIME_COMMANDLINE_ARGUMENTS[@]}" -eq 0 ]; then
@@ -135,13 +139,13 @@ process_commandline_arguments() {
 			break
 		else
 			case "${parameters[0]}" in
-				--help\
-				|-h)
-					print_help;
+				--help | \
+					-h)
+					print_help
 					exit 0
 					;;
-				--debug\
-				|-d)
+				--debug | \
+					-d)
 					enable_debug=Y
 					;;
 				*)
@@ -162,30 +166,38 @@ process_commandline_arguments() {
 		set -o xtrace
 	fi
 	return 0
-}; declare -fr process_commandline_arguments
+}
+declare -fr process_commandline_arguments
 
 ## Traps: Functions that are triggered when certain condition occurred
 ## Shell Builtin Commands » Bourne Shell Builtins » trap
-trap_errexit(){
+trap_errexit() {
 	printf 'An error occurred and the script is prematurely aborted\n' 1>&2
 	return 0
-}; declare -fr trap_errexit; trap trap_errexit ERR
+}
+declare -fr trap_errexit
+trap trap_errexit ERR
 
-trap_exit(){
+trap_exit() {
 	return 0
-}; declare -fr trap_exit; trap trap_exit EXIT
+}
+declare -fr trap_exit
+trap trap_exit EXIT
 
-trap_return(){
+trap_return() {
 	local returning_function="${1}"
 
 	printf 'DEBUG: %s: returning from %s\n' "${FUNCNAME[0]}" "${returning_function}" 1>&2
-}; declare -fr trap_return
+}
+declare -fr trap_return
 
-trap_interrupt(){
+trap_interrupt() {
 	printf '\n' # Separate previous output
 	printf 'Recieved SIGINT, script is interrupted.' 1>&2
 	return 1
-}; declare -fr trap_interrupt; trap trap_interrupt INT
+}
+declare -fr trap_interrupt
+trap trap_interrupt INT
 
 init "${@}"
 

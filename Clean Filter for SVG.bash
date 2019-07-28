@@ -27,11 +27,11 @@ for required_command in \
 		runtime_dependency_checking_result=fail
 
 		case "${required_command}" in
-			basename \
-			|cat \
-			|dirname \
-			|mktemp \
-			|realpath)
+			basename | \
+				cat | \
+				dirname | \
+				mktemp | \
+				realpath)
 				required_software='GNU Coreutils'
 				;;
 			*)
@@ -45,14 +45,16 @@ for required_command in \
 			1>&2
 		unset required_software
 	fi
-done; unset required_command required_software
+done
+unset required_command required_software
 
 if [ "${runtime_dependency_checking_result}" = fail ]; then
 	printf -- \
 		'Error: Runtime dependency checking fail, the progrom cannot continue.\n' \
 		1>&2
 	exit 1
-fi; unset runtime_dependency_checking_result
+fi
+unset runtime_dependency_checking_result
 
 ## Non-overridable Primitive Variables
 ## BASHDOC: Shell Variables » Bash Variables
@@ -82,16 +84,16 @@ declare converter_intermediate_file
 ## init function: entrypoint of main program
 ## This function is called near the end of the file,
 ## with the script's command-line parameters as arguments
-init(){
+init() {
 	local cleaner=xmlstarlet
 	local cleaner_basecommand
 	local flag_converter_mode=false
 	local -a input_files=()
 
 	if ! process_commandline_arguments \
-			cleaner \
-			flag_converter_mode \
-			input_files; then
+		cleaner \
+		flag_converter_mode \
+		input_files; then
 		printf -- \
 			'Error: Invalid command-line parameters.\n' \
 			1>&2
@@ -124,9 +126,9 @@ init(){
 			;;
 		true)
 			converter_intermediate_file="$(
-				mktemp\
-					--tmpdir\
-					--suffix=.xml\
+				mktemp \
+					--tmpdir \
+					--suffix=.xml \
 					"${RUNTIME_EXECUTABLE_NAME}.XXXX"
 			)"
 
@@ -145,7 +147,8 @@ init(){
 					--force \
 					"${converter_intermediate_file}" \
 					"${input_file}"
-			done; unset input_file
+			done
+			unset input_file
 			;;
 		*)
 			printf -- \
@@ -156,9 +159,10 @@ init(){
 	esac
 
 	exit 0
-}; declare -fr init
+}
+declare -fr init
 
-print_help(){
+print_help() {
 	# Backticks in help message is Markdown's <code> markup
 	# BASH_MANUAL: Basic Shell Features > Shell Commands > Compound Commands > Grouping Commands
 	# shellcheck disable=SC2016
@@ -195,11 +199,14 @@ print_help(){
 		printf 'Signals that further command-line arguments are all input files\n\n'
 	} 1>&2
 	return 0
-}; declare -fr print_help;
+}
+declare -fr print_help
 
 process_commandline_arguments() {
-	local -n cleaner_ref="${1}"; shift
-	local -n flag_converter_mode_ref="${1}"; shift
+	local -n cleaner_ref="${1}"
+	shift
+	local -n flag_converter_mode_ref="${1}"
+	shift
 	local -n input_files_ref="${1}"
 
 	if [ "${#RUNTIME_COMMANDLINE_ARGUMENTS[@]}" -eq 0 ]; then
@@ -217,17 +224,17 @@ process_commandline_arguments() {
 			break
 		else
 			case "${parameters[0]}" in
-				--debug \
-				|-d)
+				--debug | \
+					-d)
 					enable_debug=Y
 					;;
-				--help \
-				|-h)
-					print_help;
+				--help | \
+					-h)
+					print_help
 					exit 0
 					;;
-				--cleaner\
-				|-c)
+				--cleaner | \
+					-c)
 					if [ "${#parameters[@]}" -eq 1 ]; then
 						printf -- \
 							'%s: Error: --cleaner requires 1 additional argument.\n' \
@@ -242,8 +249,8 @@ process_commandline_arguments() {
 						parameters=("${parameters[@]}")
 					fi
 					;;
-				--converter\
-				|-C)
+				--converter | \
+					-C)
 					flag_converter_mode_ref=true
 					;;
 				--)
@@ -305,11 +312,14 @@ process_commandline_arguments() {
 		set -o xtrace
 	fi
 	return 0
-}; declare -fr process_commandline_arguments
+}
+declare -fr process_commandline_arguments
 
-check_optional_dependencies(){
-	local -r cleaner="${1}"; shift
-	local -n cleaner_basecommand_ref="${1}"; shift
+check_optional_dependencies() {
+	local -r cleaner="${1}"
+	shift
+	local -n cleaner_basecommand_ref="${1}"
+	shift
 	local -r runtime_executable_directory="${1}"
 
 	case "${cleaner}" in
@@ -332,21 +342,24 @@ check_optional_dependencies(){
 		return 1
 	fi
 	return 0
-}; declare -fr check_optional_dependencies
+}
+declare -fr check_optional_dependencies
 
-pass_over_filter(){
-	local -r cleaner="${1}"; shift
+pass_over_filter() {
+	local -r cleaner="${1}"
+	shift
 	local -r cleaner_basecommand="${1}"
 
 	case "${cleaner}" in
 		xmlstarlet)
-			local temp_result_file; temp_result_file="$(
+			local temp_result_file
+			temp_result_file="$(
 				mktemp \
 					--tmpdir \
 					xmlstarlet.cleaner.XXXXXX
 			)"
 
-			cat > "${temp_result_file}"
+			cat >"${temp_result_file}"
 
 			# Inkscape-specific info
 			## Info of the previous session
@@ -355,7 +368,7 @@ pass_over_filter(){
 			xml_remove_xpath \
 				"${temp_result_file}" \
 				'/_:svg/sodipodi:namedview/@inkscape:window-width' \
-			xml_remove_xpath \
+				xml_remove_xpath \
 				"${temp_result_file}" \
 				'/_:svg/sodipodi:namedview/@inkscape:window-height'
 
@@ -450,18 +463,21 @@ pass_over_filter(){
 			;;
 	esac
 	return 0
-}; declare -fr pass_over_filter
+}
+declare -fr pass_over_filter
 
 ## Traps: Functions that are triggered when certain condition occurred
 ## Shell Builtin Commands » Bourne Shell Builtins » trap
-trap_errexit(){
+trap_errexit() {
 	printf \
 		'An error occurred and the script is prematurely aborted\n' \
 		1>&2
 	return 0
-}; declare -fr trap_errexit; trap trap_errexit ERR
+}
+declare -fr trap_errexit
+trap trap_errexit ERR
 
-trap_exit(){
+trap_exit() {
 	# Clean up temp files if available
 	if test -v converter_intermediate_file; then
 		if ! rm \
@@ -475,9 +491,11 @@ trap_exit(){
 		unset converter_intermediate_file
 	fi
 	return 0
-}; declare -fr trap_exit; trap trap_exit EXIT
+}
+declare -fr trap_exit
+trap trap_exit EXIT
 
-trap_return(){
+trap_return() {
 	local returning_function="${1}"
 
 	printf \
@@ -485,14 +503,17 @@ trap_return(){
 		"${FUNCNAME[0]}" \
 		"${returning_function}" \
 		1>&2
-}; declare -fr trap_return
+}
+declare -fr trap_return
 
-trap_interrupt(){
+trap_interrupt() {
 	printf '\n' # Separate previous output
 	printf \
 		'Recieved SIGINT, script is interrupted.' \
 		1>&2
 	return 1
-}; declare -fr trap_interrupt; trap trap_interrupt INT
+}
+declare -fr trap_interrupt
+trap trap_interrupt INT
 
 init "${@}"
