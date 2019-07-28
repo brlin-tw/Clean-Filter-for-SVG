@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="512" height="512" viewBox="0 0 135.46666 135.46667" version="1.1" id="svg8">
+	<title id="title10">Logo of "Clean Filter for SVG"</title>
+	<defs id="defs2">
+		<linearGradient id="linearGradient900">
+			<stop style="stop-color:#000;stop-opacity:1;" offset="0" id="stop901"/>
+			<stop style="stop-color:#fff;stop-opacity:1;" offset="1" id="stop902"/>
+		</linearGradient>
+		<linearGradient xlink:href="#linearGradient900" id="linearGradient903"/>
+	</defs>
+	<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:document-units="mm" showgrid="false" inkscape:window-height="1040" units="px" inkscape:pagecheckerboard="false" objecttolerance="20"/>
+	<metadata id="metadata5">
+		<rdf:RDF>
+			<cc:Work rdf:about="">
+				<dc:format>image/svg+xml</dc:format>
+				<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+				<dc:title>Logo of "Clean Filter for SVG"</dc:title>
+				<dc:creator>
+					<cc:Agent>
+						<dc:title>林博仁(Buo-ren, Lin), featuring materials with free license</dc:title>
+					</cc:Agent>
+				</dc:creator>
+				<dc:rights>
+					<cc:Agent>
+						<dc:title>林博仁(Buo-ren, Lin) et., al.</dc:title>
+					</cc:Agent>
+				</dc:rights>
+				<dc:publisher>
+					<cc:Agent>
+						<dc:title>林博仁(Buo-ren, Lin) et., al.</dc:title>
+					</cc:Agent>
+				</dc:publisher>
+				<cc:license rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/"/>
+			</cc:Work>
+			<cc:License rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+				<cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+				<cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+				<cc:requires rdf:resource="http://creativecommons.org/ns#Notice"/>
+				<cc:requires rdf:resource="http://creativecommons.org/ns#Attribution"/>
+				<cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+				<cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike"/>
+			</cc:License>
+		</rdf:RDF>
+	</metadata>
+	<g inkscape:label="圖層 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,-161.5333)">
+		<g id="g35" transform="matrix(1.1522929,0,0,1.1522929,33.645061,223.30415)">
+			<path transform="matrix(1.062264,0,0,1.062264,-1.463833,0.109963)" style="fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:2.94182992;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1" sodipodi:stroke-cmyk="(0 0 0 0.8)" sodipodi:nodetypes="ccccccc" id="path685" d="M 26.466115,53.128989 V 30.480102 L 7.1254926,10.509668 H 51.405339 L 31.682994,30.607343 v 22.537083 z" inkscape:connector-curvature="0"/>
+			<ellipse transform="matrix(1.11055,0,0,1.437182,-3.7739,-5.052313)" style="font-size:12px;fill:#7f7f7f;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:2.47357011;stroke-dasharray:none;stroke-opacity:1" sodipodi:stroke-cmyk="(0 0 0 0.8)" id="path686" cx="30.028862" cy="10.884997" rx="21.376478" ry="4.3261919"/>
+			<ellipse transform="matrix(1.132911,0,0,1.529411,-4.012338,-6.254729)" style="font-size:12px;fill:#4c4c4c;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:1.42443001;stroke-dasharray:none;stroke-opacity:1" sodipodi:stroke-cmyk="(0 0 0 0.8)" id="path687" cx="29.511122" cy="10.964753" rx="14.215723" ry="1.5295398"/>
+		</g>
+		<g id="g54" transform="matrix(0.26458333,0,0,0.26458333,10.149174,208.96805)">
+			<rect y="-302.41129" x="-53.076145" width="163.47025" transform="rotate(70.568789)" style="fill:#b3b3b3;fill-rule:evenodd;stroke:none;stroke-width:9.79738331;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:9.79738324, 9.79738324;stroke-dashoffset:0" rx="5.9963121" id="rect837" height="163.47025"/>
+			<path style="font-size:12px;fill:#666666;fill-rule:evenodd;stroke:#333333;stroke-width:8.29728603;stroke-linecap:round;stroke-linejoin:round" sodipodi:nodetypes="cccc" id="path966" d="M 303.56569,8.1694704 C 291.46225,-7.7421854 275.95463,-21.785868 257.2329,-25.900816 241.53308,-21.118376 222.30145,-13.578115 203.47731,-6.9375647 189.9372,7.8159524 186.03038,29.013288 186.1954,49.573951" inkscape:connector-curvature="0"/>
+			<circle transform="rotate(-19.431211)" style="font-size:12px;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#333333;stroke-width:8.29730701;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1" sodipodi:stroke-cmyk="(0 0 0 0.8)" id="path710" cx="219.71858" cy="24.065306" r="50.616665"/>
+			<rect y="-302.41129" x="-53.076145" width="163.47025" transform="rotate(70.568789)" style="fill:none;fill-rule:evenodd;stroke:#333333;stroke-width:9.79738331;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:9.79738324, 9.79738324;stroke-dashoffset:0" sodipodi:stroke-cmyk="(0.0000000 0.0000000 0.0000000 0.80000001)" rx="5.9963121" id="rect855" height="163.47025"/>
+		</g>
+	</g>
+</svg>
