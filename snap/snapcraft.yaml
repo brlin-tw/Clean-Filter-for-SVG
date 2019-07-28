@@ -17,14 +17,15 @@ parts:
   main:
     source: .
     override-pull: |
-      set -o nounset -o xtrace
+      set -o nounset
 
       snapcraftctl pull
 
       # Avoid triggering the clean filter
       git config \
         --unset \
-        include.path
+        include.path \
+        || test "${?}" = 5
       snapcraftctl set-version "$(
         git describe \
           --always \
