@@ -1,5 +1,5 @@
 # 用於 SVG 的清潔過濾器<br>Clean Filter for SVG
-[![Build Status of the latest development snapshot on Travis CI](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG.svg?branch=master)](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG)  
+[![Build Status of the latest development snapshot on Travis CI](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG.svg?branch=master)](https://travis-ci.org/Lin-Buo-Ren/Clean-Filter-for-SVG)[![Snap Status](https://build.snapcraft.io/badge/Lin-Buo-Ren/Clean-Filter-for-SVG.svg)](https://build.snapcraft.io/user/Lin-Buo-Ren/Clean-Filter-for-SVG)  
 A clean filter for SVG for Git and other applications.  Currently it strips out personal information and metadata not suited for version controlling.
 
 <https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG>
@@ -12,7 +12,10 @@ The following instructions is for projects that're using Git as their VCS to int
 
 ## If your system supports [Snapd](https://snapcraft.io/docs/installing-snapd)
 1. Install Snapd if you haven't, make sure to restart your login session to make the environment changes take effect
-1. Install [the clean-filter-for-svg snap](https://snapcraft.io/clean-filter-for-svg)
+1. Install [the clean-filter-for-svg snap](https://snapcraft.io/clean-filter-for-svg)  
+
+    [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/clean-filter-for-svg)[![安裝軟體敬請移駕 Snap Store](https://snapcraft.io/static/images/badges/tw/snap-store-black.svg)](https://snapcraft.io/clean-filter-for-svg)
+
 1. Merge the following gitattributes(5) file setup:  
 
     ```
