@@ -17,18 +17,11 @@ parts:
   main:
     after:
     - selective-checkout
-    build-snaps:
-    - shfmt
     source: .
     override-pull: |
       set -o nounset
 
       snapcraftctl pull
-
-      git config\
-        --local\
-        include.path\
-        ../.gitconfig
       "$SNAPCRAFT_STAGE"/scriptlets/selective-checkout
 
     plugin: dump
