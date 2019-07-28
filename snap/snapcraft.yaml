@@ -6,7 +6,7 @@ summary: A clean filter for stripping unnecessary metadata in SVGs
 description: |
   A clean filter for SVG for Git and other applications. Currently it strips out personal information and metadata not suited for version controlling.
 
-  <https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG>
+  https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG
 
 adopt-info: main
 base: core
