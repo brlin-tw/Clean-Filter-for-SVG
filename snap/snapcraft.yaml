@@ -15,29 +15,21 @@ grade: devel
 
 parts:
   main:
+    after:
+    - selective-checkout
+    build-snaps:
+    - shfmt
     source: .
     override-pull: |
       set -o nounset
 
       snapcraftctl pull
 
-      # Avoid triggering the clean filter
-      git config \
-        --unset \
-        include.path \
-        || test "${?}" = 5
-      snapcraftctl set-version "$(
-        git describe \
-          --always \
-          --dirty \
-          --tags \
-          | sed \
-            's/^v//'
-      )"
       git config\
         --local\
         include.path\
         ../.gitconfig
+      "$SNAPCRAFT_STAGE"/scriptlets/selective-checkout
 
     plugin: dump
     organize:
@@ -53,6 +45,17 @@ parts:
     plugin: nil
     stage-snaps:
     - xmlstarlet
+
+  # Check out the tagged release revision if it isn't promoted to the stable channel
+  # https://forum.snapcraft.io/t/selective-checkout-check-out-the-tagged-release-revision-if-it-isnt-promoted-to-the-stable-channel/10617
+  selective-checkout:
+    plugin: nil
+    build-packages:
+    - git
+    stage-snaps:
+    - selective-checkout
+    prime:
+    - -*
 
 apps:
   clean-filter-for-svg:
