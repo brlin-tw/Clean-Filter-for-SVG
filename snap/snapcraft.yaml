@@ -8,6 +8,8 @@ description: |
 
   https://github.com/Lin-Buo-Ren/Clean-Filter-for-SVG
 
+license: GPL-3.0
+
 adopt-info: main
 base: core
 confinement: devmode
