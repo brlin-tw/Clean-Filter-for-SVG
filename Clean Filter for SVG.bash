@@ -85,31 +85,22 @@ declare converter_intermediate_file
 ## This function is called near the end of the file,
 ## with the script's command-line parameters as arguments
 init() {
-    local cleaner=xmlstarlet
-    local cleaner_basecommand
     local flag_converter_mode=false
     local -a input_files=()
+    local indentation_style=spaces
+    local -i indentation_space_width=4
 
     if ! process_commandline_arguments \
-        cleaner \
         flag_converter_mode \
-        input_files; then
+        input_files \
+        indentation_style \
+        indentation_space_width; then
         printf -- \
             'Error: Invalid command-line parameters.\n' \
             1>&2
 
         printf '\n' 1>&2 # separate error message and help message
         print_help
-        exit 1
-    fi
-
-    if ! check_optional_dependencies \
-        "${cleaner}" \
-        cleaner_basecommand \
-        "${RUNTIME_EXECUTABLE_DIRECTORY}"; then
-        printf -- \
-            'Error: Unable to locate the cleaner.  Please ensure that the selected cleaner is installed and its executable path is in the executable search PATHs.\n' \
-            1>&2
         exit 1
     fi
 
@@ -121,8 +112,8 @@ init() {
                 "${RUNTIME_EXECUTABLE_NAME}" \
                 1>&2
             pass_over_filter \
-                "${cleaner}" \
-                "${cleaner_basecommand}"
+                "${indentation_style}" \
+                "${indentation_space_width}"
             ;;
         true)
             converter_intermediate_file="$(
@@ -139,8 +130,8 @@ init() {
                     "${input_file}" \
                     1>&2
                 pass_over_filter \
-                    "${cleaner}" \
-                    "${cleaner_basecommand}" \
+                    "${indentation_style}" \
+                    "${indentation_space_width}" \
                     <"${input_file}" \
                     >"${converter_intermediate_file}"
                 cp \
@@ -203,11 +194,16 @@ print_help() {
 declare -fr print_help
 
 process_commandline_arguments() {
-    local -n cleaner_ref="${1}"
-    shift
     local -n flag_converter_mode_ref="${1}"
     shift
     local -n input_files_ref="${1}"
+    shift
+    local -n indentation_style_ref="${1}"
+    shift
+    # Indirect reference
+    # shellcheck disable=SC2034
+    local -n indentation_space_width_ref="${1}"
+    shift
 
     if [ "${#RUNTIME_COMMANDLINE_ARGUMENTS[@]}" -eq 0 ]; then
         return 0
@@ -218,6 +214,10 @@ process_commandline_arguments() {
 
     # Normally we won't want debug traces to appear during parameter parsing, so we add this flag and defer its activation till returning(Y: Do debug)
     local enable_debug=N
+
+    local \
+        flag_indentation_style_specified=false \
+        flag_indentation_space_width_specified=false
 
     while true; do
         if [ "${#parameters[@]}" -eq 0 ]; then
@@ -233,25 +233,63 @@ process_commandline_arguments() {
                     print_help
                     exit 0
                     ;;
-                --cleaner | \
-                    -c)
-                    if [ "${#parameters[@]}" -eq 1 ]; then
-                        printf -- \
-                            '%s: Error: --cleaner requires 1 additional argument.\n' \
-                            "${FUNCNAME[0]}" \
-                            1>&2
-                        return 1
-                    fi
-                    cleaner_ref="${parameters[1]}"
-                    # shift array by 1 = unset 1st then repack
-                    unset 'parameters[0]'
-                    if [ "${#parameters[@]}" -ne 0 ]; then
-                        parameters=("${parameters[@]}")
-                    fi
-                    ;;
                 --converter | \
                     -C)
                     flag_converter_mode_ref=true
+                    ;;
+                --indentation-style*)
+                    flag_indentation_style_specified=true
+                    if test "${parameters[0]}" = --indentation-style; then
+                        if test "${#parameters[@]}" -eq 1; then
+                            printf -- \
+                                '%s: Error: %s option requires one argument!\n' \
+                                "${FUNCNAME[0]}" \
+                                "${parameters[0]}" \
+                                1>&2
+                            return 1
+                        fi
+                        indentation_style_ref="${parameters[1]}"
+                        # shift array by 1 = unset 1st then repack
+                        unset 'parameters[0]'
+                        if [ "${#parameters[@]}" -ne 0 ]; then
+                            parameters=("${parameters[@]}")
+                        fi
+                    else
+                        indentation_style_ref="$(
+                            cut \
+                                --delimiter== \
+                                --fields=2 \
+                                <<<"${parameters[0]}"
+                        )"
+                    fi
+                    ;;
+                --indentation-space-width*)
+                    flag_indentation_space_width_specified=true
+                    if test "${parameters[0]}" = --indentation-space-width; then
+                        if test "${#parameters[@]}" -eq 1; then
+                            printf -- \
+                                '%s: Error: %s option requires one argument!\n' \
+                                "${FUNCNAME[0]}" \
+                                "${parameters[0]}" \
+                                1>&2
+                            return 1
+                        fi
+                        indentation_space_width_ref="${parameters[1]}"
+                        # shift array by 1 = unset 1st then repack
+                        unset 'parameters[0]'
+                        if [ "${#parameters[@]}" -ne 0 ]; then
+                            parameters=("${parameters[@]}")
+                        fi
+                    else
+                        # Indirectly referenced
+                        # shellcheck disable=SC2034
+                        indentation_space_width_ref="$(
+                            cut \
+                                --delimiter== \
+                                --fields=2 \
+                                <<<"${parameters[0]}"
+                        )"
+                    fi
                     ;;
                 --)
                     # shift array by 1 = unset 1st then repack
@@ -278,6 +316,25 @@ process_commandline_arguments() {
         fi
     done
 
+    if test "${flag_indentation_style_specified}" = true \
+        && test "${flag_indentation_space_width_specified}" = true \
+        && test "${indentation_style_ref}" != spaces; then
+        printf -- \
+            '%s: Error: --indentation-space-width option can only specified if --indentation-style is spaces\n' \
+            "${FUNCNAME[0]}" \
+            1>&2
+        return 1
+    fi
+
+    if test "${indentation_style_ref}" != spaces \
+        && test "${indentation_style_ref}" != tabs; then
+        printf -- \
+            '%s: Error: Invalid --indentation-style argument.\n' \
+            "${FUNCNAME[@]}" \
+            1>&2
+        return 1
+    fi
+
     if [ "${flag_converter_mode_ref}" = false ] && [ "${#input_files_ref[@]}" -ne 0 ]; then
         printf -- \
             '%s: Error: Only in --converter mode can have non-option arguments.\n' \
@@ -294,19 +351,6 @@ process_commandline_arguments() {
         return 1
     fi
 
-    case "${cleaner_ref}" in
-        xmlstarlet)
-            :
-            ;;
-        *)
-            printf -- \
-                '%s: Error: --cleaner not supported.\n' \
-                "${FUNCNAME[0]}" \
-                1>&2
-            return 1
-            ;;
-    esac
-
     if [ "${enable_debug}" = Y ]; then
         trap 'trap_return "${FUNCNAME[0]}"' RETURN
         set -o xtrace
@@ -315,156 +359,195 @@ process_commandline_arguments() {
 }
 declare -fr process_commandline_arguments
 
-check_optional_dependencies() {
-    local -r cleaner="${1}"
-    shift
-    local -n cleaner_basecommand_ref="${1}"
-    shift
-    local -r runtime_executable_directory="${1}"
-
-    case "${cleaner}" in
-        xmlstarlet)
-            # External project, out of scope
-            # shellcheck disable=SC1090
-            source "${runtime_executable_directory}/Libraries/xml.bash/xml.bash"
-
-            cleaner_basecommand_ref='xmlstarlet'
-            ;;
-        *)
-            printf -- \
-                "%s: FATAL: Shouldn't be here, report bug.\\n" \
-                "${FUNCNAME[0]}" \
-                1>&2
-            ;;
-    esac
-
-    if ! command -v "${cleaner_basecommand_ref}" 1>/dev/null 2>&1; then
-        return 1
-    fi
-    return 0
-}
-declare -fr check_optional_dependencies
-
 pass_over_filter() {
-    local -r cleaner="${1}"
+    local indentation_style="${1}"
     shift
-    local -r cleaner_basecommand="${1}"
+    local indentation_space_width="${1}"
+    shift
 
-    case "${cleaner}" in
-        xmlstarlet)
-            local temp_result_file
-            temp_result_file="$(
-                mktemp \
-                    --tmpdir \
-                    xmlstarlet.cleaner.XXXXXX
-            )"
+    local temp_result_file
+    temp_result_file="$(
+        mktemp \
+            --tmpdir \
+            xmlstarlet.cleaner.XXXXXX
+    )"
 
-            cat >"${temp_result_file}"
+    cat >"${temp_result_file}"
 
-            # Inkscape-specific info
-            ## Info of the previous session
-            ### Window settings
-            #### Inkscape window's width and height in previous session
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:window-width' \
-                xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:window-height'
+    # Inkscape-specific info
+    ## Info of the previous session
+    ### Window settings
+    #### Inkscape window's width and height in previous session
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:window-width'
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:window-height'
 
-            #### Inkscape windows's location in previous session
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:window-x'
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:window-y'
+    #### Inkscape windows's location in previous session
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:window-x'
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:window-y'
 
-            #### Inkscape windows's maximized status in previous session
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:window-maximized'
+    #### Inkscape windows's maximized status in previous session
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:window-maximized'
 
-            ### Current working layer of the previous Inkscape session
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:current-layer'
+    ### Current working layer of the previous Inkscape session
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:current-layer'
 
-            ### The zoom level of previous Inkscape session
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:zoom'
+    ### The zoom level of previous Inkscape session
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:zoom'
 
-            ## Export settings
-            ### Export DPI settings - Not useful in practice
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg//@inkscape:export-xdpi'
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg//@inkscape:export-ydpi'
-            ### The full path of the exported picture, contains sensitive information such as absolute paths
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg//@inkscape:export-filename'
+    ## Export settings
+    ### Export DPI settings - Not useful in practice
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg//@inkscape:export-xdpi'
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg//@inkscape:export-ydpi'
+    ### The full path of the exported picture, contains sensitive information such as absolute paths
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg//@inkscape:export-filename'
 
-            ## Inkscape version
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/@inkscape:version'
+    ## Inkscape version
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/@inkscape:version'
 
-            ## Essentially the SVG filename
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/@sodipodi:docname'
+    ## Essentially the SVG filename
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/@sodipodi:docname'
 
-            ## File load/save settings
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/@inkscape:output_extension'
+    ## File load/save settings
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/@inkscape:output_extension'
 
-            ## Inkscape-specific page settings that is not particulary useful to be included in image, and should fallback to sensible defaults
-            ### Whether or not showing a slim "shadow" at the right and bottom side of page
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:showpageshadow'
-            ### Whether or not showing a grid
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:showgrid'
+    ## Inkscape-specific page settings that is not particulary useful to be included in image, and should fallback to sensible defaults
+    ### Whether or not showing a slim "shadow" at the right and bottom side of page
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:showpageshadow'
+    ### Whether or not showing a grid
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:showgrid'
 
-            ## FIXME: What is these?
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:cx'
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:cy'
-            xml_remove_xpath \
-                "${temp_result_file}" \
-                '/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
+    ## FIXME: What is these?
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:cx'
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:cy'
+    xml_remove_xpath \
+        "${temp_result_file}" \
+        '/_:svg/sodipodi:namedview/@inkscape:snap-nodes'
 
-            xml_beautify_file \
-                "${temp_result_file}"
+    xml_beautify_file \
+        "${indentation_style}" \
+        "${indentation_space_width}" \
+        "${temp_result_file}"
 
-            cat "${temp_result_file}"
+    cat "${temp_result_file}"
 
-            rm \
-                --force \
-                "${temp_result_file}"
+    rm \
+        --force \
+        "${temp_result_file}"
+}
+declare -fr pass_over_filter
+
+# Remove data from XML file specified by XPath
+xml_remove_xpath() {
+    local -r xml_file="$1"
+    shift
+    local -r node_xpath="$1"
+
+    local temp_file
+    temp_file="$(
+        mktemp \
+            --tmpdir \
+            clean-filter-for-svg.XXXXXX
+    )"
+    local -r temp_file
+
+    xmlstarlet \
+        edit \
+        --pf \
+        --ps \
+        --delete \
+        "${node_xpath}" \
+        "${xml_file}" \
+        >"${temp_file}"
+
+    mv \
+        --force \
+        "${temp_file}" \
+        "${xml_file}"
+}
+
+# Beautify a XML file(indentation: tabular charactor, currently not adjustable)
+xml_beautify_file() {
+    local indentation_style="${1}"
+    shift
+    local indentation_space_width="${1}"
+    shift
+    local xml_file="$1"
+    shift
+
+    local temp_file
+    temp_file="$(
+        mktemp \
+            --tmpdir \
+            clean-filter-for-svg.XXXXXX
+    )"
+    local -r temp_file
+
+    case "${indentation_style}" in
+        spaces)
+            xmlstarlet \
+                format \
+                --encode UTF-8 \
+                --indent-spaces "${indentation_space_width}" \
+                "${xml_file}" \
+                >"${temp_file}"
+            ;;
+        tabs)
+            xmlstarlet \
+                format \
+                --encode UTF-8 \
+                --indent-tab \
+                "${xml_file}" \
+                >"${temp_file}"
             ;;
         *)
             printf -- \
-                '%s: Error: Unsupported cleaner "%s".\n' \
+                '%s: Error: Invalid indentation style %s.\n' \
                 "${FUNCNAME[0]}" \
-                "${cleaner}" \
+                "${indentation_style}" \
                 1>&2
             return 1
             ;;
     esac
-    return 0
+
+    mv \
+        --force \
+        "${temp_file}" \
+        "${xml_file}"
 }
-declare -fr pass_over_filter
 
 ## Traps: Functions that are triggered when certain condition occurred
 ## Shell Builtin Commands » Bourne Shell Builtins » trap

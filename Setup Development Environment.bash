@@ -84,12 +84,6 @@ init() {
         exit 1
     fi
 
-    cd "${RUNTIME_EXECUTABLE_DIRECTORY}"
-    git submodule \
-        init \
-        'Libraries/xml.bash'
-    git submodule update
-
     export \
         GIT_DIR="${RUNTIME_EXECUTABLE_DIRECTORY}/.git" \
         GIT_WORK_TREE="${RUNTIME_EXECUTABLE_DIRECTORY}"
