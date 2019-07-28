@@ -58,7 +58,7 @@ The following instructions is for projects that're using Git as their VCS to int
 
     ```
 
-1. Profit!  The SVG files checked into the staging area will now passed through the clean filter, you may want to implement a development environment setup script like [this](<Setup Development Environment.bash>) to ease other contributer's setup.
+1. Profit!  The SVG files checked into the staging area will now pass through the clean filter, you may want to implement a development environment setup script like [this](<Setup Development Environment.bash>) to ease other contributer's setup.
 
 ## Known alternatives
 * [cdcasey/svgclean](https://github.com/cdcasey/svgclean)
